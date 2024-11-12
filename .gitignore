@@ -1,0 +1,10 @@
+
+# Ignore Python file with credentials
+db_config.py
+
+# Ignore .env file
+.env
+
+# Add other files or folders to ignore here
+__pycache__/
+*.pyc
