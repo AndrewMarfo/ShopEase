@@ -100,3 +100,32 @@ AND month = (SELECT MAX(month) FROM sales_data WHERE year = (SELECT MAX(year) FR
 GROUP BY product_name 
 ORDER BY total_sales DESC
 LIMIT 5;
+
+-- Analyzing and optimizing Case statements
+EXPLAIN ANALYZE SELECT 
+    order_id,
+    customer_id,
+    total_revenue,
+    CASE 
+        WHEN total_revenue > 1000 THEN 'High'
+        WHEN total_revenue BETWEEN 500 AND 1000 THEN 'Medium'
+        ELSE 'Low'
+    END AS revenue_category
+FROM sales_data;
+
+-- -- Index creation for optimization
+CREATE INDEX idx_order_id_customer_id_total_revenue ON sales_data(order_id, customer_id, total_revenue);
+
+EXPLAIN ANALYZE SELECT 
+    order_id,
+    customer_id,
+    total_revenue,
+    CASE 
+        WHEN total_revenue > 1000 THEN 'High'
+        WHEN total_revenue BETWEEN 500 AND 1000 THEN 'Medium'
+        ELSE 'Low'
+    END AS revenue_category
+FROM sales_data;
+
+
+
